@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
@@ -71,6 +71,35 @@ function App() {
         setEnd(end - pageCounter);
     };
 
+    const logOff = () => {
+        setLogin(false);
+        setStart(0);
+        setEnd(pageCounter);
+        setUsuario("");
+        setPass("");
+        localStorage.clear();
+        console.log("se borro el local storage");
+    };
+
+    const setLocalStorage = () => {
+        localStorage.setItem(
+            "test",
+            JSON.stringify({ username: usuario, password: pass })
+        );
+        console.log("se guardo el localstorage");
+    };
+
+    const getLocalStorage = () => {
+        try {
+            const localLogin = localStorage.getItem("test");
+            setUsuario(localLogin.username);
+            setPass(localLogin.password);
+            setLogin(true);
+        } catch (error) {
+            console.log("no hay datos en localstorage");
+        }
+    };
+
     const handleUser = (e) => {
         setUser(e.target.value);
     };
@@ -88,7 +117,7 @@ function App() {
         ) {
             setErrorLogin(false);
             setLogin(true);
-            console.log(`Bienvenido ${usuario}`);
+            setLocalStorage();
             return "";
         } else {
             setErrorLogin(true);
@@ -108,6 +137,10 @@ function App() {
             return "";
         }
     };
+
+    useEffect(() => {
+        getLocalStorage();
+    }, []);
 
     return (
         <div className="App">
@@ -204,6 +237,9 @@ function App() {
                     <button onClick={(e) => orderByAge(e.target)} id="mayor">
                         Mayor
                     </button>
+                    <br />
+                    <br />
+                    <button onClick={() => logOff()}>Salir</button>
                 </>
             )}
         </div>
