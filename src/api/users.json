@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "name": "John",
+        "age": 30,
+        "lastName": "Doee",
+        "email": "j@gmail.com"
+    },
+    {
+        "id": 2,
+        "name": "Jane",
+        "age": 10,
+        "lastName": "Verac",
+        "email": "w@gmail.com"
+    },
+    {
+        "id": 3,
+        "name": "Cris",
+        "age": 60,
+        "lastName": "Gist",
+        "email": "a@gmail.com"
+    },
+    {
+        "id": 4,
+        "name": "Mary",
+        "age": 50,
+        "lastName": "Derp",
+        "email": "g@gmail.com"
+    },
+    {
+        "id": 5,
+        "name": "Deen",
+        "age": 20,
+        "lastName": "Clow",
+        "email": "l@gmail.com"
+    },
+    {
+        "id": 6,
+        "name": "Miche",
+        "age": 40,
+        "lastName": "Pip",
+        "email": "p@gmail.com"
+    }
+]

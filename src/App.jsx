@@ -2,53 +2,9 @@ import { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
-    const arrayUser = [
-        {
-            id: 1,
-            name: "John",
-            age: 30,
-            lastName: "Doee",
-            email: "j@gmail.com",
-        },
-        {
-            id: 2,
-            name: "Jane",
-            age: 10,
-            lastName: "Verac",
-            email: "w@gmail.com",
-        },
-        {
-            id: 3,
-            name: "Cris",
-            age: 60,
-            lastName: "Gist",
-            email: "a@gmail.com",
-        },
-        {
-            id: 4,
-            name: "Mary",
-            age: 50,
-            lastName: "Derp",
-            email: "g@gmail.com",
-        },
-        {
-            id: 5,
-            name: "Deen",
-            age: 20,
-            lastName: "Clow",
-            email: "l@gmail.com",
-        },
-        {
-            id: 6,
-            name: "Miche",
-            age: 40,
-            lastName: "Pip",
-            email: "p@gmail.com",
-        },
-    ];
     const [pageCounter, setPageCounter] = useState(2);
     const [user, setUser] = useState("");
-    const [users, setUsers] = useState(arrayUser);
+    const [users, setUsers] = useState([]);
     const [usuario, setUsuario] = useState("");
     const [pass, setPass] = useState("");
     const [login, setLogin] = useState(false);
@@ -60,6 +16,16 @@ function App() {
     const loginData = {
         user: "ju",
         pass: "ju",
+    };
+
+    const fetchUsers = async () => {
+        try {
+            const res = await fetch("http://127.0.0.1:5173/src/api/users.json");
+            const userData = await res.json();
+            setUsers(userData);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const next = () => {
@@ -115,6 +81,7 @@ function App() {
             usuario.trim() === loginData.user &&
             pass.trim() === loginData.pass
         ) {
+            fetchUsers();
             setErrorLogin(false);
             setLogin(true);
             setLocalStorage();
@@ -136,6 +103,12 @@ function App() {
             setUsers(sortedArray);
             return "";
         }
+    };
+
+    const deleteUser = (id) => {
+        const filteredUser = users.filter((user) => user.id !== id);
+        setUsers(filteredUser);
+        console.log(filteredUser);
     };
 
     useEffect(() => {
@@ -185,11 +158,14 @@ function App() {
                     </button>
                     <button
                         onClick={next}
-                        disabled={end >= arrayUser.length && "disabled"}
+                        disabled={end >= users.length && "disabled"}
                     >
                         Next
                     </button>
-                    <p>cantidad por pagina</p>
+                    <p>
+                        Paginas {start} de{" "}
+                        {Math.floor(users.length / pageCounter)}
+                    </p>
 
                     <span></span>
                     <table>
@@ -217,12 +193,32 @@ function App() {
                                     .map((_u) => {
                                         return (
                                             <>
-                                                <tr key={_u.id}>
-                                                    <th>{_u.name}</th>
-                                                    <th>{_u.lastName}</th>
-                                                    <th>{_u.age}</th>
-                                                    <th>{_u.email}</th>
-                                                </tr>
+                                                {users ? (
+                                                    <>
+                                                        <tr key={_u.id}>
+                                                            <td>{_u.name}</td>
+                                                            <td>
+                                                                {_u.lastName}
+                                                            </td>
+                                                            <td>{_u.age}</td>
+                                                            <td>{_u.email}</td>
+                                                            <td>
+                                                                {" "}
+                                                                <button
+                                                                    onClick={() =>
+                                                                        deleteUser(
+                                                                            _u.id
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    Borrar
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </>
+                                                ) : (
+                                                    "La lista de users esta vacia"
+                                                )}
                                             </>
                                         );
                                     })
