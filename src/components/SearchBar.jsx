@@ -49,6 +49,7 @@ const Header = () => {
             <p>
                 Paginas {counterPage} de {Math.ceil(users.length / pageCounter)}
             </p>
+            <hr />
         </>
     );
 };

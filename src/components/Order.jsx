@@ -21,6 +21,7 @@ const Order = () => {
     return (
         <>
             <br />
+            <hr />
             <h3>Ordenar por</h3>
             <button onClick={(e) => orderByAge(e.target)} id="menor">
                 Menor

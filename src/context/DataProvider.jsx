@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const DataContext = createContext();
 
@@ -6,14 +7,16 @@ const DataProvider = ({ children }) => {
     const [user, setUser] = useState("");
     const [users, setUsers] = useState([]);
     const [usuario, setUsuario] = useState("");
-    const [login, setLogin] = useState(false);
+    const [logged, setLogged] = useState(false);
     const [errorLogin, setErrorLogin] = useState(false);
-    const [pageCounter, setPageCounter] = useState(2);
+    const [pageCounter, setPageCounter] = useState(2); // incrementador del slice para users
     const [end, setEnd] = useState(pageCounter);
-    const [counterPage, setCounterPage] = useState(1);
+    const [counterPage, setCounterPage] = useState(1); // para contar pagina 1 de 3
     const [start, setStart] = useState(0);
     const [pass, setPass] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
+
+    const navigate = useNavigate();
 
     const fetchUsers = async () => {
         try {
@@ -26,19 +29,20 @@ const DataProvider = ({ children }) => {
     };
 
     const logOff = () => {
-        setLogin(false);
+        setLogged(false);
         setStart(0);
         setEnd(pageCounter);
         setUsuario("");
         setPass("");
         localStorage.clear();
+        navigate("/");
         console.log("se borro el local storage");
     };
     return (
         <DataContext.Provider
             value={{
-                login,
-                setLogin,
+                logged,
+                setLogged,
                 errorLogin,
                 setErrorLogin,
                 fetchUsers,

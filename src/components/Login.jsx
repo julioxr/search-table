@@ -1,18 +1,22 @@
 import { useState, useEffect, useContext } from "react";
 import { DataContext } from "../context/DataProvider";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Login = () => {
+    const navigate = useNavigate();
     const {
         fetchUsers,
         usuario,
         setUsuario,
         errorLogin,
         setErrorLogin,
-        setLogin,
+        setLogged,
         pass,
         setPass,
         errorMsg,
         setErrorMsg,
+        logged,
     } = useContext(DataContext);
 
     const loginData = {
@@ -31,10 +35,11 @@ const Login = () => {
             usuario.trim() === loginData.user &&
             pass.trim() === loginData.pass
         ) {
-            // fetchUsers();
+            fetchUsers();
             setErrorLogin(false);
-            setLogin(true);
+            setLogged(true);
             setLocalStorage();
+            navigate("/main");
             return "";
         } else {
             setErrorLogin(true);
@@ -45,7 +50,7 @@ const Login = () => {
 
     const setLocalStorage = () => {
         localStorage.setItem(
-            "test",
+            "logged",
             JSON.stringify({ username: usuario, password: pass })
         );
         console.log("se guardo el localstorage");
@@ -53,11 +58,11 @@ const Login = () => {
 
     const getLocalStorage = () => {
         try {
-            const localLogin = localStorage.getItem("test");
-            setUsuario(localLogin.username);
-            setPass(localLogin.password);
+            const userStorage = localStorage.getItem("logged");
+            setUsuario(userStorage.username);
+            setPass(userStorage.password);
             fetchUsers();
-            setLogin(true);
+            setLogged(true);
         } catch (error) {
             console.log("no hay datos en localstorage");
         }
@@ -86,9 +91,10 @@ const Login = () => {
                 />
                 <br />
                 <button onClick={handleLogin}>LogIn</button>
-                <a href="#">Registrarse</a>
+                <Link to="/register">Registrarse</Link>
             </form>
             {errorLogin && <p>{errorMsg}</p>}
+            <hr />
         </>
     );
 };
