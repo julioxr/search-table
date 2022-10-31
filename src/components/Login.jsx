@@ -16,7 +16,6 @@ const Login = () => {
         setPass,
         errorMsg,
         setErrorMsg,
-        logged,
     } = useContext(DataContext);
 
     const loginData = {

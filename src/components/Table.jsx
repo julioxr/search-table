@@ -39,6 +39,7 @@ const Table = () => {
                                     <td>{_u.age}</td>
                                     <td>{_u.email}</td>
                                     <td>
+                                        <button>Editar</button>
                                         <button
                                             onClick={() => deleteUser(_u.id)}
                                         >

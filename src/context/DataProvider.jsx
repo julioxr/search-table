@@ -9,7 +9,7 @@ const DataProvider = ({ children }) => {
     const [usuario, setUsuario] = useState("");
     const [logged, setLogged] = useState(false);
     const [errorLogin, setErrorLogin] = useState(false);
-    const [pageCounter, setPageCounter] = useState(2); // incrementador del slice para users
+    const [pageCounter, setPageCounter] = useState(6); // incrementador del slice para users
     const [end, setEnd] = useState(pageCounter);
     const [counterPage, setCounterPage] = useState(1); // para contar pagina 1 de 3
     const [start, setStart] = useState(0);
