@@ -23,7 +23,8 @@ const Login = () => {
         pass: "ju",
     };
 
-    const handleLogin = () => {
+    const handleLogin = (e) => {
+        e.preventDefault();
         if (usuario === "" || pass === "") {
             setErrorLogin(true);
             setErrorMsg("Los campos no pueden estar vacios");
@@ -89,11 +90,12 @@ const Login = () => {
                     onChange={(e) => setPass(e.target.value)}
                 />
                 <br />
-                <button onClick={handleLogin}>LogIn</button>
+                <button type="submit" onClick={(e) => handleLogin(e)}>
+                    LogIn
+                </button>
                 <Link to="/register">Registrarse</Link>
             </form>
             {errorLogin && <p>{errorMsg}</p>}
-            <hr />
         </>
     );
 };
